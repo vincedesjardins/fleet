@@ -1,0 +1,5 @@
+resources:
+- ./ns-custerrole.yaml
+- ./policy-ns.yaml
+- ./ns-team-a.yaml
+- ./flux-team-sync.yaml

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    team: team-a
+    root: "true"
+  name: team-a

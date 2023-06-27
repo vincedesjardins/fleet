@@ -1,0 +1,35 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: enforce-team-label
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+  - name: enforce-team-label
+    match:
+      any:
+      - resources:
+          kinds:
+          - Namespace
+    context:
+    - name: namespace
+      apiCall:
+        urlPath: "/api/v1/namespaces/{{serviceAccountNamespace}}"
+        method: GET
+    exclude:
+      any:
+      - clusterRoles:
+        - cluster-admin
+    preconditions:
+      all:
+      - key: "{{ namespace.metadata.labels.root }}"
+        operator: Equals
+        value: "true"
+    validate:
+      message: "You must have label `team` with value `{{ namespace.metadata.labels.team }}` and a `parent` with value `{{ namespace.metadata.name }}` set on the namespace."
+      pattern:
+        metadata:
+          labels:
+            team: "{{ namespace.metadata.labels.team }}"
+            parent: "{{ namespace.metadata.name }}"

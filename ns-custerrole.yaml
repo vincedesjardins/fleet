@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: namespaces-admin
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: namespaces-admin
+subjects:
+- kind: ServiceAccount
+  name: fluxcd
+  namespace: team-a
+roleRef:
+  kind: ClusterRole
+  name: namespaces-admin
+  apiGroup: rbac.authorization.k8s.io
