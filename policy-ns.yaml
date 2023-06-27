@@ -25,8 +25,10 @@ spec:
       - key: "{{ namespace.metadata.labels.root }}"
         operator: Equals
         value: "true"
+      - key: "{{ request.object.metadata.labels.root }}"
+        operator: DoNotExists
     validate:
-      message: "You must have label `team` with value `{{ namespace.metadata.labels.team }}` and a `parent` with value `{{ namespace.metadata.name }}` set on the namespace."
+      message: "Namespace label `team` with value `{{ request.object.metadata.labels.team }}` must match parent namespace `team` label having value `{{ namespace.metadata.name }}`."
       pattern:
         metadata:
           labels:
