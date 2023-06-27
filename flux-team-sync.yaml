@@ -1,18 +1,16 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
 metadata:
   name: team-a
   namespace: team-a
 spec:
-  insecure: true
-  interval: 1m
-  provider: generic
+  interval: 5m0s
+  url: https://github.com/vincedesjardins/team-a
   ref:
-    tag: local
-  url: oci://kind-registry:5000/team-a
+    branch: main
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: team-a
@@ -23,6 +21,7 @@ spec:
   timeout: 5m
   path: ./
   prune: true
+  serviceAccountName: fluxcd
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: team-a
