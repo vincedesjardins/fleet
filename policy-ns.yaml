@@ -16,7 +16,6 @@ spec:
     - name: namespace
       apiCall:
         urlPath: "/api/v1/namespaces/{{serviceAccountNamespace}}"
-        method: GET
     exclude:
       any:
       - clusterRoles:
