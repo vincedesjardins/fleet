@@ -31,5 +31,5 @@ spec:
         metadata:
           labels:
             team: "{{ namespace.metadata.labels.team }}"
-            #parent: "{{ namespace.metadata.name }}"
+            parent: "{{ namespace.metadata.name }}"
             root: "false"
