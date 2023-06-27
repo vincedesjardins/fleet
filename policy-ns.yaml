@@ -26,7 +26,7 @@ spec:
         operator: Equals
         value: "true"
     validate:
-      message: "Namespace label `team` with value `{{ request.object.metadata.labels.team }}` must match parent namespace `team` label having value `{{ namespace.metadata.name }}`."
+      message: "Namespace label `team` with value `{{  namespace.metadata.labels.team }}` must match parent namespace `team` label having value `{{ namespace.metadata.name }}`."
       pattern:
         metadata:
           labels:
