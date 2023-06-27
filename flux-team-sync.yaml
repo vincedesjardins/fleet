@@ -5,7 +5,7 @@ metadata:
   name: team-a
   namespace: team-a
 spec:
-  interval: 5m0s
+  interval: 2m0s
   url: https://github.com/vincedesjardins/team-a
   ref:
     branch: main
