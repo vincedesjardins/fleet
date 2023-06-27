@@ -1,0 +1,44 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: flux-ns-binding
+spec:
+  background: true
+  rules:
+  - generate:
+      data:
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: beneva:hn:flux-sync
+        subjects:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: ServiceAccount
+          name: fluxcd
+          namespace: '{{request.object.metadata.labels.parent}}'
+      kind: RoleBinding
+      name: beneva:hn:flux-sync
+      namespace: '{{request.object.metadata.name}}'
+      synchronize: true
+    match:
+      resources:
+        kinds:
+        - Namespace
+        selector:
+          matchLabels:
+            root: "false"
+    name: flux-sync
+  validationFailureAction: audit
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: beneva:hn:flux-sync
+rules:
+- apiGroups:
+  - kustomize.toolkit.fluxcd.io
+  - source.toolkit.fluxcd.io
+  resources:
+  - '*'
+  verbs:
+  - '*'

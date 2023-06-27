@@ -3,3 +3,4 @@ resources:
 - ./policy-ns.yaml
 - ./ns-team-a.yaml
 - ./flux-team-sync.yaml
+- ./policy-ns-flux.yaml
