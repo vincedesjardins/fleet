@@ -25,18 +25,21 @@ spec:
       - key: "{{ namespace.metadata.labels.root }}"
         operator: Equals
         value: "true"
-      - key: "{{ namespace.metadata.labels }}"
-        operator: AnyIn
-        value:
-        - team
-        - parent
-        - root
-        - istio.io/rev
     validate:
-      message: "Namespace label `team` must have value `{{  namespace.metadata.labels.team }}` and `parent` label must have value {{ namespace.metadata.name }} and label `root` must have value `false`."
-      pattern:
-        metadata:
-          labels:
-            team: "{{ namespace.metadata.labels.team }}"
-            parent: "{{ namespace.metadata.name }}"
-            root: "false"
+      message: >-
+        Wrong values for namespace labels
+      deny:
+        conditions:
+          any:
+          - key: "{{ request.object.metadata.labels.team }}"
+            operator: Equals
+            value: "{{ namespace.metadata.labels.team }}"
+            message: "team label should be {{ namespace.metadata.labels.team }}"
+          - key: "{{ request.object.metadata.labels.parent }}"
+            operator: Equals
+            value: "{{ namespace.metadata.name }}"
+            message: "parent label should be {{ namespace.metadata.name }}"
+          - key: "{{ request.object.metadata.labels.root }}"
+            operator: Equals
+            value: "false"
+            message: "root label should be false"
