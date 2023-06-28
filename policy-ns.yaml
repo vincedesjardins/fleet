@@ -43,3 +43,10 @@ spec:
             operator: Equals
             value: "false"
             message: "root label should be false"
+          - key: "{{ request.object.metadata.labels }}"
+            operator: AnyNotIn
+            value:
+            - team
+            - root
+            - parent
+            message: "denied labels"
