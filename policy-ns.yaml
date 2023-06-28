@@ -25,8 +25,15 @@ spec:
       - key: "{{ namespace.metadata.labels.root }}"
         operator: Equals
         value: "true"
+      - key: "{{ namespace.metadata.labels }}"
+        operator: AnyIn
+        value:
+        - team
+        - parent
+        - root
+        - istio.io/rev
     validate:
-      message: "Namespace label `team` with value `{{  namespace.metadata.labels.team }}` must match parent namespace `team` label having value `{{ namespace.metadata.name }}`."
+      message: "Namespace label `team` must have value `{{  namespace.metadata.labels.team }}` and `parent` label must have value {{ namespace.metadata.name }} and label `root` must have value `false`."
       pattern:
         metadata:
           labels:
