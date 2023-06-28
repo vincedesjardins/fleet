@@ -49,4 +49,8 @@ spec:
             - team
             - root
             - parent
+            - kubernetes.io/metadata.name
+            - kustomize.toolkit.fluxcd.io/name
+            - kustomize.toolkit.fluxcd.io/namespace
+            - istio.io/rev
             message: "denied labels"
